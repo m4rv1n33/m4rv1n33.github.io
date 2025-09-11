@@ -560,6 +560,8 @@
             transform: translateY(0);
         }
 
+        
+
         /* Responsive Design */
         @media (max-width: 992px) {
             h1 {
@@ -662,6 +664,50 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent);
+        }
+
     </style>
 </head>
 <body>
@@ -783,21 +829,18 @@ It provides a visual and structured way to explore SBB’s rolling stock, from h
             
             <div class="detail-gallery">
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=SBB+Interface+1" alt="SBB Interface 1">
+                    <img src="assets/ss1.jpg" alt="SBB 1">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=SBB+Interface+2" alt="SBB Interface 2">
+                    <img src="assets/ss3.jpg" alt="SBB 3">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=SBB+Interface+3" alt="SBB Interface 3">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=SBB+Interface+4" alt="SBB Interface 4">
+                    <img src="assets/ss4.jpg" alt="SBB 4">
                 </div>
             </div>
             
             <div class="project-links">
-                <a href="https://github.com/m4rv1n33/sbb_showcase"><i class="fab fa-github"></i> View Source Code</a>
+                <a href="https://github.com/m4rv1n33/sbb_showcase" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
             </div>
         </div>
     </div>
@@ -810,6 +853,7 @@ It provides a visual and structured way to explore SBB’s rolling stock, from h
                 <p class="project-tech">JavaScript • UI Design • Game Development • Teamwork</p>
             </div>
             <p>WISS Casino is a collection of classic casino games implemented in JavaScript. It features authentic game mechanics and a user-friendly interface.</p>
+            <p>This Project was done by me and a friend in school.</p>
             <h3>Features</h3>
             <ul>
                 <li>Modern UI</li>
@@ -820,19 +864,20 @@ It provides a visual and structured way to explore SBB’s rolling stock, from h
             
             <div class="detail-gallery">
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=Casino+Game+1" alt="Casino Game 1">
+                    <img src="assets/bj21-1.png" alt="Blackjack1">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=Casino+Game+2" alt="Casino Game 2">
+                    <img src="assets/bj21-2.png" alt="Blackjack2">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://placehold.co/300x150/2a2a2a/ffffff?text=Casino+Game+3" alt="Casino Game 3">
+                    <img src="assets/slots-2.png" alt="Slots">
                 </div>
             </div>
             
             <div class="project-links">
                 <a href="https://github.com/m4rv1n33/wiss-casino" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
-                <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="https://github.com/Elysiummmm" target="_blank"><i class="fab fa-github"></i> Friend</a>
+                <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
             </div>
         </div>
     </div>
@@ -871,6 +916,11 @@ It provides a visual and structured way to explore SBB’s rolling stock, from h
         </div>
     </footer>
 
+    <!-- lightbox or smth -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Expanded Image">
+    </div>
     <script>
         // Nav
         const menuBtn = document.getElementById('menuBtn');
@@ -990,6 +1040,38 @@ It provides a visual and structured way to explore SBB’s rolling stock, from h
                 });
             }
         });
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.detail-gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
     </script>
 </body>
 </html>
