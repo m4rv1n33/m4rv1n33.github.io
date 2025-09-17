@@ -20,4 +20,3 @@ The goal is to provide an easy way for people to get to know me and explore what
 ## Tech Stack
 
 - Built with modern web technologies (HTML, CSS, JavaScript)  
-- Deployed with GitHub Pages
