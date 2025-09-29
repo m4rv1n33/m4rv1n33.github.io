@@ -702,3 +702,62 @@ footer {
 .lightbox-close:hover {
   color: var(--accent);
 }
+
+@media (max-width: 768px) {
+  .nav-right {
+    gap: 1rem;
+  }
+
+  .theme-toggle {
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-cta .btn {
+    width: 100%;
+    max-width: 250px;
+    margin: 0.5rem auto;
+  }
+}
+
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.project-card {
+  flex: 1 1 300px;
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .detail-content {
+    width: 95%;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-links li {
+    margin: 0.5rem 0;
+  }
+}
